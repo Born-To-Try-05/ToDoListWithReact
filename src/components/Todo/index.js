@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./Todo.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,8 @@ function Todo() {
     const [list, setList] = useState([]);
     const [update, setUpdate] = useState(false);
     const [currentIndex, setCurrentIndex] = useState();
+
+    const inputRef = useRef();
 
     const handleAdd = () => {
         if (text === "") {
@@ -30,7 +32,7 @@ function Todo() {
 
     const handleUpdate = (index) => {
         setText(list[index].text);
-        document.getElementById("input").focus();
+        inputRef.current.focus();
         setUpdate(true);
         setCurrentIndex(index);
     };
@@ -57,7 +59,7 @@ function Todo() {
             <div className="row">
                 <input
                     type="text"
-                    id="input"
+                    ref={inputRef}
                     placeholder="Add your to do list"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
